@@ -1,0 +1,86 @@
+#include <stdio.h>
+
+// Function to perform linear search
+int linearSearch(int arr[], int size, int target) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == target) {
+            return i; // Return the index of the found element
+        }
+    }
+    return -1; // Return -1 if the element is not found
+}
+
+// Function to perform binary search
+int binarySearch(int arr[], int size, int target) {
+    int left = 0;
+    int right = size - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2; // Calculate the middle index
+
+        // Check if the target is present at mid
+        if (arr[mid] == target) {
+            return mid; // Return the index of the found element
+        }
+
+        // If the target is greater, ignore the left half
+        if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            // If the target is smaller, ignore the right half
+            right = mid - 1;
+        }
+    }
+    return -1; // Return -1 if the element is not found
+}
+
+int main() {
+    int choice, size, target, result;
+
+    // Input the size of the array
+    printf("Enter the number of elements in the array: ");
+    scanf("%d", &size);
+
+    int arr[size];
+
+    // Input elements of the array
+    printf("Enter %d elements (in sorted order for binary search):\n", size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Choose the search method
+    printf("Choose search method:\n1. Linear Search\n2. Binary Search\n");
+    scanf("%d", &choice);
+
+    // Input the target element to search for
+    printf("Enter the element to search: ");
+    scanf("%d", &target);
+
+    // Perform the chosen search method
+    switch (choice) {
+        case 1:
+            result = linearSearch(arr, size, target);
+            if (result != -1) {
+                printf("Element %d found at index %d using Linear Search.\n", target, result);
+            } else {
+                printf("Element %d not found using Linear Search.\n", target);
+            }
+            break;
+
+        case 2:
+            result = binarySearch(arr, size, target);
+            if (result != -1) {
+                printf("Element %d found at index %d using Binary Search.\n", target, result);
+            } else {
+                printf("Element %d not found using Binary Search.\n", target);
+            }
+            break;
+
+        default:
+            printf("Invalid choice! Please choose 1 or 2.\n");
+            break;
+    }
+
+    return 0;
+}
