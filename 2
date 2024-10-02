@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main() {
+    int num, reversed[10], i = 0, length = 0;
+
+    // Ask user for input
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+
+    // Store each digit of the number in an array
+    while (num != 0) {
+        reversed[i] = num % 10; // Get the last digit
+        num /= 10;              // Remove the last digit
+        i++;
+    }
+    length = i; // Store the number of digits
+
+    // Output the reversed number
+    printf("Reversed number: ");
+    for (i = 0; i < length; i++) {
+        printf("%d", reversed[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
