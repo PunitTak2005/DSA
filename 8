@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+// Structure to represent a non-zero element in the sparse matrix
+typedef struct {
+    int row;
+    int col;
+    int value;
+} SparseMatrix;
+
+// Function to input a sparse matrix
+void inputSparseMatrix(SparseMatrix sparse[], int *nonZeroCount) {
+    int rows, cols;
+
+    printf("Enter the number of rows and columns: ");
+    scanf("%d %d", &rows, &cols);
+    
+    printf("Enter the elements of the matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            int value;
+            scanf("%d", &value);
+            if (value != 0) {
+                sparse[*nonZeroCount].row = i;
+                sparse[*nonZeroCount].col = j;
+                sparse[*nonZeroCount].value = value;
+                (*nonZeroCount)++;
+            }
+        }
+    }
+}
+
+// Function to display the sparse matrix
+void displaySparseMatrix(SparseMatrix sparse[], int nonZeroCount) {
+    printf("Sparse Matrix Representation (row, column, value):\n");
+    for (int i = 0; i < nonZeroCount; i++) {
+        printf("%d %d %d\n", sparse[i].row, sparse[i].col, sparse[i].value);
+    }
+}
+
+int main() {
+    SparseMatrix sparse[MAX_SIZE];
+    int nonZeroCount = 0;
+
+    // Input sparse matrix
+    inputSparseMatrix(sparse, &nonZeroCount);
+
+    // Display the sparse matrix
+    displaySparseMatrix(sparse, nonZeroCount);
+
+    return 0;
+}
