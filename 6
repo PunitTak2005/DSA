@@ -1,0 +1,86 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+// Function to insert an element at a specified position
+void insert(int arr[], int *n, int element, int position) {
+    if (*n >= MAX_SIZE) {
+        printf("Array is full. Cannot insert new element.\n");
+        return;
+    }
+
+    // Shift elements to the right
+    for (int i = *n; i > position; i--) {
+        arr[i] = arr[i - 1];
+    }
+
+    arr[position] = element;  // Insert the new element
+    (*n)++;                    // Increase the size of the array
+}
+
+// Function to delete an element at a specified position
+void delete(int arr[], int *n, int position) {
+    if (position < 0 || position >= *n) {
+        printf("Invalid position. Cannot delete element.\n");
+        return;
+    }
+
+    // Shift elements to the left
+    for (int i = position; i < *n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    (*n)--;  // Decrease the size of the array
+}
+
+// Function to merge two arrays
+void merge(int arr1[], int n1, int arr2[], int n2, int arr3[], int *n3) {
+    for (int i = 0; i < n1; i++) {
+        arr3[(*n3)++] = arr1[i];  // Add elements from the first array
+    }
+    for (int i = 0; i < n2; i++) {
+        arr3[(*n3)++] = arr2[i];  // Add elements from the second array
+    }
+}
+
+// Function to display the array
+void display(int arr[], int n) {
+    printf("Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[MAX_SIZE] = {10, 20, 30, 40, 50};  // Initial array
+    int n = 5;  // Number of elements in the array
+
+    printf("Initial array: \n");
+    display(arr, n);
+
+    // Insertion
+    int element, position;
+    printf("Enter element to insert and position (0-%d): ", n);
+    scanf("%d %d", &element, &position);
+    insert(arr, &n, element, position);
+    display(arr, n);
+
+    // Deletion
+    printf("Enter position to delete (0-%d): ", n - 1);
+    scanf("%d", &position);
+    delete(arr, &n, position);
+    display(arr, n);
+
+    // Merging two arrays
+    int arr2[] = {60, 70, 80};  // Second array
+    int n2 = sizeof(arr2) / sizeof(arr2[0]);
+    int arr3[MAX_SIZE];
+    int n3 = 0;
+
+    merge(arr, n, arr2, n2, arr3, &n3);
+    printf("Merged array: \n");
+    display(arr3, n3);
+
+    return 0;
+}
