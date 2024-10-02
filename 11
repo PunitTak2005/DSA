@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Define the structure for the stack
+struct Stack {
+    struct Node* top;
+};
+
+// Function to create a stack and initialize its top
+struct Stack* createStack() {
+    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+    stack->top = NULL; // Stack is initially empty
+    return stack;
+}
+
+// Function to check if the stack is empty
+int isEmpty(struct Stack* stack) {
+    return stack->top == NULL;
+}
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to push an element onto the stack
+void push(struct Stack* stack, int value) {
+    struct Node* newNode = createNode(value);
+    newNode->next = stack->top; // Point new node to the current top
+    stack->top = newNode; // Update the top to the new node
+    printf("%d pushed onto stack.\n", value);
+}
+
+// Function to pop an element from the stack
+int pop(struct Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack Underflow! Cannot pop from an empty stack.\n");
+        return -1; // Return a sentinel value for underflow
+    }
+    struct Node* temp = stack->top;
+    int poppedValue = temp->data;
+    stack->top = stack->top->next; // Update top to the next node
+    free(temp); // Free the old top node
+    return poppedValue;
+}
+
+// Function to peek at the top element of the stack
+int peek(struct Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty. No top element.\n");
+        return -1; // Return a sentinel value for empty stack
+    }
+    return stack->top->data;
+}
+
+// Function to display the elements of the stack
+void displayStack(struct Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty.\n");
+        return;
+    }
+    struct Node* current = stack->top;
+    printf("Stack elements: ");
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+// Main function to demonstrate stack operations
+int main() {
+    struct Stack* stack = createStack();
+
+    push(stack, 10);
+    push(stack, 20);
+    push(stack, 30);
+    displayStack(stack);
+
+    printf("Top element is %d\n", peek(stack));
+
+    printf("%d popped from stack.\n", pop(stack));
+    displayStack(stack);
+
+    printf("%d popped from stack.\n", pop(stack));
+    displayStack(stack);
+
+    printf("%d popped from stack.\n", pop(stack));
+    displayStack(stack);
+
+    // Attempting to pop from an empty stack
+    pop(stack);
+
+    return 0;
+}
